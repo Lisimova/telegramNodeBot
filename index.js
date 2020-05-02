@@ -44,7 +44,7 @@ const calendar = new Calendar(bot, {
 var conn = new sf.Connection({
     LoginUrl: 'https://login.salesforce.com'
 });
-bot.telegram.setWebhook('https://expenseappbot.herokuapp.com:443/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss/');
+bot.telegram.setWebhook('https://mysterious-falls-24213.herokuapp.com:443/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss/');
 
 conn.login('alena@expenseapp.com', 'adapter1996', function(err, userInfo) {
     if (err) { return console.error(err); }
@@ -162,13 +162,6 @@ const expenseCreater = new WizardScene(
         );
     }),
     stepHandler,
-    /*ctx => {
-        ctx.wizard.state.datacard = selecteddate;
-        console.log(ctx.wizard.state.datacard);
-        ctx.reply("Введите описание: ");
-        // Go to the following scene
-        return ctx.wizard.next();
-    },*/
     ctx => {
         ctx.wizard.state.datacard = selecteddate;
         ctx.wizard.state.description = ctx.message.text;
