@@ -1,9 +1,8 @@
 const Telegraf = require('telegraf');
-const bot = new Telegraf('958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss', {
-    webhook: {
-        port: process.env.PORT,
-    }
-});
+//var port = process.env.PORT || 3000;
+var host = '0.0.0.0';
+
+const bot = new Telegraf('958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss');
 var sf = require('node-salesforce');
 var Markup = require('telegraf/markup');
 const Calendar = require('telegraf-calendar-telegram');
@@ -23,12 +22,7 @@ router.post('/bot', ctx => {
 });
 
 app.use(BodyParser());
-app.use(router.routes());
-app.listen(3000);
-*/
-console.log('bjj00');
-
-console.log('bjj01');
+app.use(router.routes());*/
 
 const calendar = new Calendar(bot, {
     startWeekDay: 0,
@@ -44,7 +38,9 @@ const calendar = new Calendar(bot, {
 var conn = new sf.Connection({
     LoginUrl: 'https://login.salesforce.com'
 });
-bot.telegram.setWebhook('https://mysterious-falls-24213.herokuapp.com:443/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss/');
+//bot.telegram.setWebhook('https://expenseappbot.herokuapp.com/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss/');
+//bot.use(bot.webhookCallback(`/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss`));
+//bot.use(Telegraf.log());
 
 conn.login('alena@expenseapp.com', 'adapter1996', function(err, userInfo) {
     if (err) { return console.error(err); }
@@ -225,4 +221,5 @@ bot.action('balance', ctx => {
 bot.catch((err) => {
     console.log("Error in bot:", err);
 });
-bot.launch();
+//bot.launch();
+bot.startPolling();
