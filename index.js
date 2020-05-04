@@ -1,4 +1,6 @@
 const Telegraf = require('telegraf');
+//var port = process.env.PORT || 3000;
+var host = '0.0.0.0';
 
 const bot = new Telegraf('958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss', {polling : true});
 var sf = require('node-salesforce');
@@ -8,6 +10,19 @@ const WizardScene = require("telegraf/scenes/wizard");
 const Stage = require("telegraf/stage");
 const session = require("telegraf/session");
 const Composer = require('telegraf/composer');
+/*const Koa = require('koa');
+const Router = require('koa-router');
+const BodyParser = require('koa-bodyparser');
+
+const app = new Koa();
+const router = Router();
+router.post('/bot', ctx => {
+    const {body} = ctx.request;
+    bot.handleUpdate(body);
+});
+
+app.use(BodyParser());
+app.use(router.routes());*/
 
 const calendar = new Calendar(bot, {
     startWeekDay: 0,
@@ -24,6 +39,8 @@ var conn = new sf.Connection({
     LoginUrl: 'https://login.salesforce.com'
 });
 //bot.telegram.setWebhook('https://expenseappbot.herokuapp.com/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss/');
+//bot.use(bot.webhookCallback(`/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss`));
+//bot.use(Telegraf.log());
 
 conn.login('alena@expenseapp.com', 'adapter1996', function(err, userInfo) {
     if (err) { return console.error(err); }
@@ -99,7 +116,7 @@ const authentication = new WizardScene(
                 if (err) {
                     return console.error(err);
                 }
-                if (records.length === 0)
+                if (records.length == 0)
                     return ctx.reply('Вход не выполнен! Проверьте логин или пароль!',
                         Markup.inlineKeyboard([
                             Markup.callbackButton('Повтор', 'replay')
@@ -112,7 +129,7 @@ const authentication = new WizardScene(
                             Markup.callbackButton('Создать карточку', "create")
                         ]).extra()
                     );
-                }
+                };
             });
         return ctx.scene.leave();
     }
@@ -180,6 +197,7 @@ bot.action("replay", Stage.enter("authentication"));
 
 
 bot.action('balance', ctx => {
+    const chatId = ctx.chat.id;
     var sum = 0;
     conn.sobject("Monthly_Expense__c")
         .find( { 'Keeper__c': officeId},
@@ -203,5 +221,5 @@ bot.action('balance', ctx => {
 bot.catch((err) => {
     console.log("Error in bot:", err);
 });
-
+//bot.launch();
 bot.startPolling();
