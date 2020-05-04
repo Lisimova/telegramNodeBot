@@ -3,11 +3,10 @@ const Telegraf = require('telegraf');
 //const bot = new Telegraf('958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss', {polling : true});
 require('dotenv').config();
 const token = '958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss';
-let bot;
+var bot = new Telegraf(token);
 
 if (process.env.NODE_ENV === 'production') {
-    bot = new Telegraf(token);
-    bot.telegram.setWebHook('https://herokutlegbot.herokuapp.com/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss/');
+    bot.telegram.setWebhook('https://herokutlegbot.herokuapp.com/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss/');
 } else {
     bot = new Telegraf(token, { polling: true });
 }
