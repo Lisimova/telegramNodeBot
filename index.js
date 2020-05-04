@@ -1,6 +1,4 @@
 const Telegraf = require('telegraf');
-//var port = process.env.PORT || 3000;
-var host = '0.0.0.0';
 
 const bot = new Telegraf('958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss', {polling : true});
 var sf = require('node-salesforce');
@@ -10,9 +8,6 @@ const WizardScene = require("telegraf/scenes/wizard");
 const Stage = require("telegraf/stage");
 const session = require("telegraf/session");
 const Composer = require('telegraf/composer');
-
-app.use(BodyParser());
-app.use(router.routes());*/
 
 const calendar = new Calendar(bot, {
     startWeekDay: 0,
@@ -28,6 +23,7 @@ const calendar = new Calendar(bot, {
 var conn = new sf.Connection({
     LoginUrl: 'https://login.salesforce.com'
 });
+//bot.telegram.setWebhook('https://expenseappbot.herokuapp.com/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss/');
 
 conn.login('alena@expenseapp.com', 'adapter1996', function(err, userInfo) {
     if (err) { return console.error(err); }
@@ -208,3 +204,5 @@ bot.action('balance', ctx => {
 bot.catch((err) => {
     console.log("Error in bot:", err);
 });
+
+bot.startPolling();
