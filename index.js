@@ -237,7 +237,8 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.listen(process.env.PORT);
+app.listen( process.env.PORT || 8080);
+console.log( process.env.PORT || 1337);
 
 app.post('/' + bot.token, (req, res) => {
     bot.processUpdate(req.body);
