@@ -2,7 +2,7 @@ const Telegraf = require('telegraf');
 //var port = process.env.PORT || 3000;
 var host = '0.0.0.0';
 
-const bot = new Telegraf('958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss');
+const bot = new Telegraf('958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss', {polling : true});
 var sf = require('node-salesforce');
 var Markup = require('telegraf/markup');
 const Calendar = require('telegraf-calendar-telegram');
