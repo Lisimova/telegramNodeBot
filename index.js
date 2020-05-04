@@ -10,16 +10,6 @@ const WizardScene = require("telegraf/scenes/wizard");
 const Stage = require("telegraf/stage");
 const session = require("telegraf/session");
 const Composer = require('telegraf/composer');
-/*const Koa = require('koa');
-const Router = require('koa-router');
-const BodyParser = require('koa-bodyparser');
-
-const app = new Koa();
-const router = Router();
-router.post('/bot', ctx => {
-    const {body} = ctx.request;
-    bot.handleUpdate(body);
-});
 
 app.use(BodyParser());
 app.use(router.routes());*/
@@ -38,9 +28,6 @@ const calendar = new Calendar(bot, {
 var conn = new sf.Connection({
     LoginUrl: 'https://login.salesforce.com'
 });
-//bot.telegram.setWebhook('https://expenseappbot.herokuapp.com/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss/');
-//bot.use(bot.webhookCallback(`/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss`));
-//bot.use(Telegraf.log());
 
 conn.login('alena@expenseapp.com', 'adapter1996', function(err, userInfo) {
     if (err) { return console.error(err); }
@@ -221,5 +208,3 @@ bot.action('balance', ctx => {
 bot.catch((err) => {
     console.log("Error in bot:", err);
 });
-//bot.launch();
-bot.startPolling();
