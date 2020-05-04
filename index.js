@@ -262,7 +262,7 @@ var server = app.listen(process.env.PORT, function () {
 */
 bot.launch();
 expressApp.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('Telegram bot is active');
 });
 expressApp.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
