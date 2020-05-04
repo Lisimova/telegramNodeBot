@@ -1,9 +1,7 @@
 const Telegraf = require('telegraf');
 
-//const bot = new Telegraf('958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss', {polling : true});
 require('dotenv').config();
 const token = '958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss';
-//noconst Telegraf = require('telegraf');
 const express = require('express');
 const expressApp = express();
 
@@ -14,16 +12,6 @@ const URL = process.env.URL || 'https://herokutlegbot.herokuapp.com';
 const bot = new Telegraf(API_TOKEN);
 bot.telegram.setWebhook(`${URL}/bot${API_TOKEN}`);
 expressApp.use(bot.webhookCallback(`/bot${API_TOKEN}`));
-/*
- your bot commands and all the other stuff on here ....
-*/
-// and at the end just start server on PORT
-
-/*if (process.env.NODE_ENV === 'production') {
-    bot.telegram.setWebhook('https://herokutlegbot.herokuapp.com/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss/');
-} else {
-    bot = new Telegraf(token, { polling: true });
-}*/
 var sf = require('node-salesforce');
 var Markup = require('telegraf/markup');
 const Calendar = require('telegraf-calendar-telegram');
@@ -31,19 +19,6 @@ const WizardScene = require("telegraf/scenes/wizard");
 const Stage = require("telegraf/stage");
 const session = require("telegraf/session");
 const Composer = require('telegraf/composer');
-/*const Koa = require('koa');
-const Router = require('koa-router');
-const BodyParser = require('koa-bodyparser');
-
-const app = new Koa();
-const router = Router();
-router.post('/bot', ctx => {
-    const {body} = ctx.request;
-    bot.handleUpdate(body);
-});
-
-app.use(BodyParser());
-app.use(router.routes());*/
 
 const calendar = new Calendar(bot, {
     startWeekDay: 0,
@@ -59,10 +34,6 @@ const calendar = new Calendar(bot, {
 var conn = new sf.Connection({
     LoginUrl: 'https://login.salesforce.com'
 });
-//
-//bot.telegram.setWebhook('https://herokutlegbot.herokuapp.com/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss/');
-//bot.use(bot.webhookCallback(`/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss`));
-//bot.use(Telegraf.log());
 
 conn.login('alena@expenseapp.com', 'adapter1996', function(err, userInfo) {
     if (err) { return console.error(err); }
@@ -243,23 +214,6 @@ bot.action('balance', ctx => {
 bot.catch((err) => {
     console.log("Error in bot:", err);
 });
-/*
-var express = require('express');
-var packageInfo = require('./package.json');
-
-var app = express();
-
-app.get('/', function (req, res) {
-    res.json({ version: packageInfo.version });
-});
-
-var server = app.listen(process.env.PORT, function () {
-    var host = server.address().address;
-    var port = server.address().port;
-
-    console.log('Web server started at http://%s:%s', host, port);
-});
-*/
 bot.launch();
 expressApp.get('/', (req, res) => {
     res.send('Telegram bot is active');
