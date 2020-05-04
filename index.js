@@ -1,6 +1,4 @@
 const Telegraf = require('telegraf');
-//var port = process.env.PORT || 3000;
-var host = '0.0.0.0';
 
 const bot = new Telegraf('958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss', {polling : true});
 var sf = require('node-salesforce');
@@ -38,7 +36,8 @@ const calendar = new Calendar(bot, {
 var conn = new sf.Connection({
     LoginUrl: 'https://login.salesforce.com'
 });
-//bot.telegram.setWebhook('https://expenseappbot.herokuapp.com/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss/');
+//
+// bot.telegram.setWebhook('https://herokutlegbot.herokuapp.com/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss/');
 //bot.use(bot.webhookCallback(`/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss`));
 //bot.use(Telegraf.log());
 
@@ -221,5 +220,5 @@ bot.action('balance', ctx => {
 bot.catch((err) => {
     console.log("Error in bot:", err);
 });
-//bot.launch();
-bot.startPolling();
+bot.launch();
+//bot.startPolling();
