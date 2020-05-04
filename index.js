@@ -3,13 +3,27 @@ const Telegraf = require('telegraf');
 //const bot = new Telegraf('958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss', {polling : true});
 require('dotenv').config();
 const token = '958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss';
-var bot = new Telegraf(token);
+//noconst Telegraf = require('telegraf');
+const express = require('express');
+const expressApp = express();
 
-if (process.env.NODE_ENV === 'production') {
+const API_TOKEN = process.env.API_TOKEN || token;
+const PORT = process.env.PORT || 3000;
+const URL = process.env.URL || 'https://herokutlegbot.herokuapp.com';
+
+const bot = new Telegraf(API_TOKEN);
+bot.telegram.setWebhook(`${URL}/bot${API_TOKEN}`);
+expressApp.use(bot.webhookCallback(`/bot${API_TOKEN}`));
+/*
+ your bot commands and all the other stuff on here ....
+*/
+// and at the end just start server on PORT
+
+/*if (process.env.NODE_ENV === 'production') {
     bot.telegram.setWebhook('https://herokutlegbot.herokuapp.com/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss/');
 } else {
     bot = new Telegraf(token, { polling: true });
-}
+}*/
 var sf = require('node-salesforce');
 var Markup = require('telegraf/markup');
 const Calendar = require('telegraf-calendar-telegram');
@@ -229,28 +243,27 @@ bot.action('balance', ctx => {
 bot.catch((err) => {
     console.log("Error in bot:", err);
 });
-/*const express = require('express')
-const bodyParser = require('body-parser');
-
-const app = express();
-
-app.use(bodyParser.json());*/
-'use strict';
-
+/*
 var express = require('express');
+var packageInfo = require('./package.json');
 
 var app = express();
 
-app.use('/', express.static('public'));
+app.get('/', function (req, res) {
+    res.json({ version: packageInfo.version });
+});
 
-app.listen(3000, function() { console.log("The server is running on port 3000!"); });
-/*app.set('port', ( process.env.PORT || 8080 ));
-app.listen(app.get('port'), () => {console.log(`listening on port ${process.env.PORT}`)});
-console.log( process.env.PORT || 1337);
+var server = app.listen(process.env.PORT, function () {
+    var host = server.address().address;
+    var port = server.address().port;
 
-app.post('/' + bot.token, (req, res) => {
-    bot.processUpdate(req.body);
-    res.sendStatus(200);
-});*/
-//bot.launch();
-//bot.startPolling();
+    console.log('Web server started at http://%s:%s', host, port);
+});
+*/
+bot.launch();
+expressApp.get('/', (req, res) => {
+    res.send('Hello World!');
+});
+expressApp.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
