@@ -7,7 +7,7 @@ let bot;
 
 if (process.env.NODE_ENV === 'production') {
     bot = new Telegraf(token);
-    bot.setWebHook('https://herokutlegbot.herokuapp.com/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss/');
+    bot.telegram.setWebHook('https://herokutlegbot.herokuapp.com/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss/');
 } else {
     bot = new Telegraf(token, { polling: true });
 }
