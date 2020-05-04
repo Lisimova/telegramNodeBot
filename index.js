@@ -1,6 +1,16 @@
 const Telegraf = require('telegraf');
 
-const bot = new Telegraf('958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss', {polling : true});
+//const bot = new Telegraf('958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss', {polling : true});
+require('dotenv').config();
+const token = '958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss';
+let bot;
+
+if (process.env.NODE_ENV === 'production') {
+    bot = new Telegraf(token);
+    bot.setWebHook('https://herokutlegbot.herokuapp.com/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss');
+} else {
+    bot = new Telegraf(token, { polling: true });
+}
 var sf = require('node-salesforce');
 var Markup = require('telegraf/markup');
 const Calendar = require('telegraf-calendar-telegram');
@@ -37,7 +47,7 @@ var conn = new sf.Connection({
     LoginUrl: 'https://login.salesforce.com'
 });
 //
-// bot.telegram.setWebhook('https://herokutlegbot.herokuapp.com/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss/');
+//bot.telegram.setWebhook('https://herokutlegbot.herokuapp.com/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss/');
 //bot.use(bot.webhookCallback(`/bot958331091:AAFOJJGIKZu5vnAJKWfQfcZBjYetN8c4Kss`));
 //bot.use(Telegraf.log());
 
@@ -220,5 +230,18 @@ bot.action('balance', ctx => {
 bot.catch((err) => {
     console.log("Error in bot:", err);
 });
-bot.launch();
+const express = require('express')
+const bodyParser = require('body-parser');
+
+const app = express();
+
+app.use(bodyParser.json());
+
+app.listen(process.env.PORT);
+
+app.post('/' + bot.token, (req, res) => {
+    bot.processUpdate(req.body);
+    res.sendStatus(200);
+});
+//bot.launch();
 //bot.startPolling();
