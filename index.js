@@ -229,19 +229,28 @@ bot.action('balance', ctx => {
 bot.catch((err) => {
     console.log("Error in bot:", err);
 });
-const express = require('express')
+/*const express = require('express')
 const bodyParser = require('body-parser');
 
 const app = express();
 
-app.use(bodyParser.json());
-app.set('port', ( process.env.PORT || 8080 ));
+app.use(bodyParser.json());*/
+'use strict';
+
+var express = require('express');
+
+var app = express();
+
+app.use('/', express.static('public'));
+
+app.listen(3000, function() { console.log("The server is running on port 3000!"); });
+/*app.set('port', ( process.env.PORT || 8080 ));
 app.listen(app.get('port'), () => {console.log(`listening on port ${process.env.PORT}`)});
 console.log( process.env.PORT || 1337);
 
 app.post('/' + bot.token, (req, res) => {
     bot.processUpdate(req.body);
     res.sendStatus(200);
-});
+});*/
 //bot.launch();
 //bot.startPolling();
