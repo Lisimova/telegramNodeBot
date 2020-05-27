@@ -6,11 +6,12 @@ const express = require('express');
 const expressApp = express();
 
 const API_TOKEN = process.env.API_TOKEN || token;
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8443;
 const URL = process.env.URL || 'https://herokutlegbot.herokuapp.com';
 
 const bot = new Telegraf(API_TOKEN);
-bot.telegram.setWebhook(`${URL}/bot${API_TOKEN}`);
+/*bot.telegram.deleteWebhook();
+bot.telegram.setWebhook(`${URL}/bot${API_TOKEN}`);*/
 expressApp.use(bot.webhookCallback(`/bot${API_TOKEN}`));
 var sf = require('node-salesforce');
 var Markup = require('telegraf/markup');
