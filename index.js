@@ -37,7 +37,8 @@ var conn = new sf.Connection({
 });
 
 conn.login('alena@expenseapp.com', 'adapter1996', function(err, userInfo) {
-    if (err) { return console.error(err); }
+    if (err) { return console.error(err);
+    return ctx.reply(err);}
   // Now you can get the access token and instance URL information.
   // Save them to establish connection next time.
   console.log(conn.accessToken);
