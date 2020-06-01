@@ -117,13 +117,6 @@ const authentication = new WizardScene(
                             Markup.callbackButton('Повтор', 'replay')
                         ]).extra());
                 if (records.length > 0) {
-                    if(records[0].Admin__c == true) {
-                        return ctx.reply('Вход выполнен в качестве администратора. Пожалуйста, для создания карточки и просмотра баланса офиса зайдите под учетной записью работника офиса.',
-                        Markup.inlineKeyboard([
-                            Markup.callbackButton('Повтор', 'replay')
-                        ]).extra());
-                    }
-                    else {
                         officeId = records[0].Id;
                         ctx.reply('Авторизация прошла успешно!',
                             Markup.inlineKeyboard([
@@ -131,7 +124,6 @@ const authentication = new WizardScene(
                                 Markup.callbackButton('Создать карточку', "create")
                             ]).extra()
                         );
-                    }
                 };
             });
         return ctx.scene.leave();
